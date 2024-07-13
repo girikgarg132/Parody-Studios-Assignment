@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> _cubes;
     [SerializeField] private Animator _animator;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private LayerMask _groundMask;
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _hologram;
     [SerializeField] private Transform _mesh;
     [SerializeField] private float _speed;
-    [FormerlySerializedAs("_jumpHeight")] [SerializeField] private float _jumpPower;
+    [SerializeField] private float _jumpPower;
     [SerializeField] private float _gravity;
     [SerializeField] private float _groundDistance;
 
@@ -74,7 +75,25 @@ public class PlayerController : MonoBehaviour
         }
         
         _rigidbody.AddForce(-transform.up * _gravity, ForceMode.Acceleration);
-        Debug.Log(_rigidbody.GetAccumulatedForce());
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Boundry"))
+        {
+            FindObjectOfType<UI>().GameOver(false);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Collectible")) return;
+        _cubes.Remove(other.gameObject);
+        Destroy(other.gameObject);
+        if (_cubes.Count == 0)
+        {
+            FindObjectOfType<UI>().GameOver(true);
+        }
     }
 
     void OnMove(InputAction.CallbackContext context)
