@@ -53,13 +53,31 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GravityConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""237e3d50-d980-41b6-a65e-0f829bf35bff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GravityDeny"",
+                    ""type"": ""Button"",
+                    ""id"": ""484c570a-caf8-47d6-b4f7-2d4f858b7c25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""079b6a50-78c9-4ced-babf-5a3f1b407036"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=1)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -176,6 +194,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""GravityManipulation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6ca4ee2-0815-4172-9e60-ffaaff1eabc4"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GravityConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9459daa5-d3a0-436e-870f-b4ed04e95e57"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GravityDeny"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +227,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_GravityManipulation = m_Player.FindAction("GravityManipulation", throwIfNotFound: true);
+        m_Player_GravityConfirm = m_Player.FindAction("GravityConfirm", throwIfNotFound: true);
+        m_Player_GravityDeny = m_Player.FindAction("GravityDeny", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +293,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_GravityManipulation;
+    private readonly InputAction m_Player_GravityConfirm;
+    private readonly InputAction m_Player_GravityDeny;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -258,6 +302,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @GravityManipulation => m_Wrapper.m_Player_GravityManipulation;
+        public InputAction @GravityConfirm => m_Wrapper.m_Player_GravityConfirm;
+        public InputAction @GravityDeny => m_Wrapper.m_Player_GravityDeny;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -276,6 +322,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GravityManipulation.started += instance.OnGravityManipulation;
             @GravityManipulation.performed += instance.OnGravityManipulation;
             @GravityManipulation.canceled += instance.OnGravityManipulation;
+            @GravityConfirm.started += instance.OnGravityConfirm;
+            @GravityConfirm.performed += instance.OnGravityConfirm;
+            @GravityConfirm.canceled += instance.OnGravityConfirm;
+            @GravityDeny.started += instance.OnGravityDeny;
+            @GravityDeny.performed += instance.OnGravityDeny;
+            @GravityDeny.canceled += instance.OnGravityDeny;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -289,6 +341,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @GravityManipulation.started -= instance.OnGravityManipulation;
             @GravityManipulation.performed -= instance.OnGravityManipulation;
             @GravityManipulation.canceled -= instance.OnGravityManipulation;
+            @GravityConfirm.started -= instance.OnGravityConfirm;
+            @GravityConfirm.performed -= instance.OnGravityConfirm;
+            @GravityConfirm.canceled -= instance.OnGravityConfirm;
+            @GravityDeny.started -= instance.OnGravityDeny;
+            @GravityDeny.performed -= instance.OnGravityDeny;
+            @GravityDeny.canceled -= instance.OnGravityDeny;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -311,5 +369,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnGravityManipulation(InputAction.CallbackContext context);
+        void OnGravityConfirm(InputAction.CallbackContext context);
+        void OnGravityDeny(InputAction.CallbackContext context);
     }
 }

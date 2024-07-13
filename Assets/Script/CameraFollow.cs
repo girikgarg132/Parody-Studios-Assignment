@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] Transform target;
-    [SerializeField] float smoothSpeed;
+    public Transform target;
+    public float smoothSpeed;
 
     private Vector3 offset;
 
@@ -19,7 +19,5 @@ public class CameraFollow : MonoBehaviour
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
         transform.position = smoothedPosition;
-
-        transform.LookAt(target);
     }
 }
