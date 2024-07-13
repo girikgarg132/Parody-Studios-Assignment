@@ -7410,6 +7410,7 @@ GameObject:
   - component: {fileID: 919132149603880274}
   - component: {fileID: 919132149603880276}
   - component: {fileID: 919132149603880275}
+  - component: {fileID: 919132149603880277}
   m_Layer: 0
   m_Name: Exo Gray
   m_TagString: Untagged
@@ -7455,15 +7456,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71be87d05ec04345a45cae81d67338f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
-  _jumpHeight: 2
-  _gravity: -9.81
-  _groundCheck: {fileID: 1780872992}
-  _groundDistance: 0.4
+  _controller: {fileID: 919132149603880274}
+  _animator: {fileID: 919132149603880277}
   _groundMask:
     serializedVersion: 2
     m_Bits: 8
-  _controller: {fileID: 919132149603880274}
+  _groundCheck: {fileID: 1780872992}
+  _speed: 10
+  _jumpHeight: 2
+  _gravity: -9.81
+  _groundDistance: 0.4
 --- !u!136 &919132149603880276
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7487,6 +7489,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.95, z: 0}
+--- !u!95 &919132149603880277
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149603880273}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a62f35399f623f846a574fee3dd78b40, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &927016744737343624
 GameObject:
   m_ObjectHideFlags: 0

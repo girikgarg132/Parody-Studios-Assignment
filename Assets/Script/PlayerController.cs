@@ -3,13 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private CharacterController _controller;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpHeight;
     [SerializeField] private float _gravity;
-    [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundDistance;
-    [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private CharacterController _controller;
     
     private PlayerInputActions _inputActions;
     private Vector3 _velocity;
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
-
+        
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2f;
@@ -54,7 +55,21 @@ public class PlayerController : MonoBehaviour
         if (_jumpInput && _isGrounded)
         {
             _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
+            _animator.SetBool("Jumping", true);
             _jumpInput = false;
+        }
+        else
+        {
+            _animator.SetBool("Jumping", false);
+        }
+        
+        if (!_isGrounded)
+        {
+            _animator.SetBool("Falling", true);
+        }
+        else
+        {
+            _animator.SetBool("Falling", false);
         }
 
         _velocity.y += _gravity * Time.deltaTime;
@@ -64,6 +79,14 @@ public class PlayerController : MonoBehaviour
     private void OnMove(InputAction.CallbackContext context)
     {
         _movementInput = -context.ReadValue<Vector2>();
+        if (_movementInput == Vector2.zero)
+        {
+            _animator.SetBool("Running", false);
+        }
+        else
+        {
+            _animator.SetBool("Running", true);
+        }
     }
 
     private void OnJump(InputAction.CallbackContext context)
