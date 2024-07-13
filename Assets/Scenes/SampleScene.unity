@@ -924,6 +924,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -998,12 +999,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19406971, y: 0.0026480856, z: -0.00052281533, w: 0.9809841}
-  m_LocalPosition: {x: -0.026694724, y: 2.3400624, z: -1.9221308}
-  m_LocalScale: {x: 0.7637086, y: 0.75316423, z: 0.7637086}
+  m_LocalRotation: {x: -0.00052281533, y: 0.9809841, z: -0.19406971, w: -0.0026480856}
+  m_LocalPosition: {x: 1.0232811, y: 3.3369749, z: 2.6868382}
+  m_LocalScale: {x: 1, y: 0.99799824, z: 1.00203}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 543450653259175915}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -1049,6 +1050,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb0c104c5aaaa04ea74e281f820bd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 5465940246962763647}
+  smoothSpeed: 0.125
 --- !u!1 &332856813
 GameObject:
   m_ObjectHideFlags: 0
@@ -7301,7 +7316,6 @@ Transform:
   - {fileID: 9012584597696256345}
   - {fileID: 1674257186921248195}
   - {fileID: 5465940246962763647}
-  - {fileID: 330585546}
   - {fileID: 1780872992}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -12444,6 +12458,7 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 330585546}
   - {fileID: 543450653259175915}
   - {fileID: 410087041}
   - {fileID: 832575519}

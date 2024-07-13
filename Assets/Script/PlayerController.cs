@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpHeight;
     [SerializeField] private float _gravity;
     [SerializeField] private float _groundDistance;
-    
+
     private PlayerInputActions _inputActions;
     private Vector3 _velocity;
     private Vector2 _movementInput;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
-        
+
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2f;
@@ -51,6 +51,11 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3(_movementInput.x, 0, _movementInput.y);
         _controller.Move(move * (_speed * Time.deltaTime));
+
+        if (move != Vector3.zero)
+        {
+            transform.forward = move.normalized;
+        }
 
         if (_jumpInput && _isGrounded)
         {
@@ -62,7 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("Jumping", false);
         }
-        
+
         if (!_isGrounded)
         {
             _animator.SetBool("Falling", true);
@@ -74,19 +79,13 @@ public class PlayerController : MonoBehaviour
 
         _velocity.y += _gravity * Time.deltaTime;
         _controller.Move(_velocity * Time.deltaTime);
+
+        _animator.SetBool("Running", move.magnitude > 0);
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
         _movementInput = -context.ReadValue<Vector2>();
-        if (_movementInput == Vector2.zero)
-        {
-            _animator.SetBool("Running", false);
-        }
-        else
-        {
-            _animator.SetBool("Running", true);
-        }
     }
 
     private void OnJump(InputAction.CallbackContext context)
