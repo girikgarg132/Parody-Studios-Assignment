@@ -12,13 +12,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private Transform _hologram;
     [SerializeField] private Transform _mesh;
+    [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpPower;
     [SerializeField] private float _gravity;
     [SerializeField] private float _groundDistance;
+    [SerializeField] private float _turnTime;
+    
 
     private PlayerInputActions _inputActions;
     private Vector2 _movementInput;
+    private float _turnVelocity;
     private bool _jumpInput;
     private bool _isGrounded;
 
@@ -53,12 +57,12 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
-
         if (_movementInput != Vector2.zero && _isGrounded)
-        {
+        { 
             Vector3 direction = (transform.forward * _movementInput.y + transform.right * _movementInput.x).normalized;
             _rigidbody.MovePosition(_rigidbody.position + direction * (_speed * Time.deltaTime));
             Vector3 rotationDirection = new Vector3(_movementInput.x, 0f, _movementInput.y).normalized;
+            
             float targetAngle = Mathf.Atan2(rotationDirection.x, rotationDirection.z) * Mathf.Rad2Deg;
                 
             _mesh.localRotation = Quaternion.Euler(0f, targetAngle, 0f);
